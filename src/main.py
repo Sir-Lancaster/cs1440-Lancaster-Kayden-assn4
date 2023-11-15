@@ -58,13 +58,9 @@ if len(sys.argv) < 2:
         print("\t{}".format(i))
     sys.exit(1)
 
-#
-#
-# quit when not enough arguments are given
 if len(sys.argv) < 1:
     print ("Usage: The first argument needs to name a fractal")
 
-### quit when the first one of the arguments isn't on the command line
 arg_is_phoneix = 0
 while sys.argv[1] in PHOENX:
     arg_is_phoneix += True
@@ -74,7 +70,6 @@ else:
     arg_is_phoneix = False
 sysargv1_not_mndlbrt_frctl = MBROTS.count(sys.argv[1])
 
-#
 # figure out if the comand line argument is one of the known fractals
 if not arg_is_phoneix and sysargv1_not_mndlbrt_frctl == 0:
     print("ERROR:", sys.argv[1], "is not a valid fractal")
@@ -102,7 +97,6 @@ if not arg_is_phoneix and sysargv1_not_mndlbrt_frctl == 0:
                 i -= 1 #need to back off, else index error   
                 exit = exit and MBROTS[i]  == 'starfish'    
         i = i + 1
-    # return 1
     sys.exit(1)
     print("Those are all of the choices")
 else:
