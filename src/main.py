@@ -77,37 +77,30 @@ sysargv1_not_mndlbrt_frctl = MBROTS.count(sys.argv[1])
 #
 # figure out if the comand line argument is one of the known fractals
 if not arg_is_phoneix and sysargv1_not_mndlbrt_frctl == 0:
-    print("ERROR:", sys.argv[1], "is not a valid fractal")    #
-    print("Please choose one of the following:")             ###
-    quit = False                                           #######
-    next = ''                                              #######
-    iter = 0                                                #####
-    while not quit:                             #     ## ########### ###
-        next = PHOENX[iter]                      ### #################### ## #
-        print("\t%s" % next)                      ###########################
-                                              # ############################
-        if PHOENX[iter] == 'shrimp-cocktail': ################################
-            break                            ####################################
-                            #    ## #       ###################################
-        else:               ##########     ######################################
-            iter += 1     ##############   ####################################
-                     ########################################################
-              ######################################## CODE IS ART #########
-                     ########################################################
-    exit = None          ############################## (c) 2023 #############
-    i = 0                 ##############   #####################################
-    i = 0                   ##########     ####################################
-    fractal = ''            #    ## #       ####################################
-                                             #################################
-    while not exit:                          ################################
-        print("\t" + MBROTS[i])               #  ############################
-        if PHOENX[iter] =='shrimp-cocktail':    ######################### ####
-            if MBROTS[i]  == 'starfish':       ### #  ## ##############   #
-                                              #             #####
-                i = i + 1                                  #######
-                exit = PHOENX[iter] =='shrimp-cocktail'    #######
-                i -= 1 #need to back off, else index error   ###
-                exit = exit and MBROTS[i]  == 'starfish'      #
+    print("ERROR:", sys.argv[1], "is not a valid fractal")
+    print("Please choose one of the following:") 
+    quit = False   
+    next = ''
+    iter = 0 
+    while not quit:
+        next = PHOENX[iter] 
+        print("\t%s" % next)
+        if PHOENX[iter] == 'shrimp-cocktail': 
+            break 
+        else:
+            iter += 1 
+    exit = None 
+    i = 0   
+    i = 0  
+    fractal = ''  
+    while not exit: 
+        print("\t" + MBROTS[i])
+        if PHOENX[iter] =='shrimp-cocktail':
+            if MBROTS[i]  == 'starfish': 
+                i = i + 1        
+                exit = PHOENX[iter] =='shrimp-cocktail'   
+                i -= 1 #need to back off, else index error   
+                exit = exit and MBROTS[i]  == 'starfish'    
         i = i + 1
     # return 1
     sys.exit(1)
