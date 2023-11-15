@@ -54,7 +54,7 @@ from tkinter import Tk, Canvas, PhotoImage, mainloop
 from time import time
 
 
-SPC = chr(0o40)  # Why doesn't anybody write octal numbers anymore...
+SPC = chr(0o40)  # octal numbers
 s = 0o1000
 
 def getColorFromPalette(z):
@@ -63,34 +63,27 @@ def getColorFromPalette(z):
     within the Phoenix fractal in the palette array
     """
 
-    # I feel bad about all of the global variables I'm using.
-    # There must be a better way...
+
     global grad
     global win
 
     # c is the Julia Constant; varying this value gives rise to a variety of variated images
     c = complex(0.5667, 0.0)
 
-    # phoenix is the Phonix Constant; same deal as above - adjust this to get different results
     pheonix = complex(-0.5, 0.0)
 
-    # The first thing we do to the complex number Z is reflect its components,
-    # so the imaginary part becomes the real part, and vice versa
+    # The first thing we do to the complex number Z is reflect its components
     zFlipped = complex(z.imag, z.real)
-    ## if we don't do this, the image comes out SIDEWAYS!!!
 
-    # zPrevious is the PREVIOUS Z value, except the 1st time through the
-    # function, when it starts out as Complex Zero (which is actually the
-    # same thing as REAL Zero 0)  MATH IS BEAUTIFUL!
+    # zPrevious is the PREVIOUS Z value
     zPrev = 0+0j
-    # set Z back to zFlipped, it is literally super-important that we do this
-    # before the next part of the algorithm
+    # set Z back to zFlipped
     z = zFlipped
 
     # I want to use 101 here because that's the number of colors in the
     # palette.  Except range() wants its number to be one more than the number
     # that YOU want.
-    for i in range(102):# <--not cool, PYTHON WHY CAN'T YOU BE BEAUTIFUL LIKE MATH?
+    for i in range(102):
 
         zSave = z  # save the current Z value before we overwrite it
         # compute the new Z value from the current and previous Zs
@@ -181,24 +174,21 @@ def makePictureOfFractal(f, i, e, w, g, p, W, a, b, s):
     # but I have to here because we're actually going BACKWARDS, which took me
     # a long time to figure out, so don't change it, or else the picture won't
     # come out right
+
+
+    # future kayden why not just use s? -past Kayden
     r = s
     while r in range(s, 0, -1):
         # for c (c == column) in the range of pixels in a square of size s
         cs = []
         for c in range(s):
-            # calculate the X value in the complex plane (I guess that's
-            # actually the REAL number part, but we call it X because
-            # GRAPHICS... whatev)
+            # calculate the X value in the complex plane 
             X = min[0] + c * size
             Y = 0
             # get the color of the pixel at this point in the complex plain
             cp = getColorFromPalette(complex(X, Y))
-            # calculate the X value in the complex plane (but I know this is
-            # really the IMAGINARY axis that we're talking about here...)
             Y = min[1] + r * size
             # TODO: do I really need to call getColorFromPalette() twice?
-            #       It seems like this should be slow...
-            #       But, if it aint broken, don't repair it, right?
             cp = getColorFromPalette(complex(X, Y))
             cs.append(cp)
         pixls = '{' + ' '.join(cs) + '}'
@@ -250,11 +240,7 @@ grad += [Black.BLACK] * 6  # six pixels should be enough
 
 # This dictionary contains the different views of the Phoenix set you can make
 # with this program.
-#
-# For convenience I have placed these into a dictionary so you may easily
-# switch between them by entering the name of the image you want to generate
-# into the variable 'i'.
-#
+
 # TODO: Maybe it would be a good idea to incorporate the complex value `c` into
 # this configuration dictionary instead of hardcoding it into this program.
 # But I don't have time for this right now, too busy.  I'll just keep doing it
@@ -291,29 +277,26 @@ f = {
 
 
 # This is how you write colors for computers
-WHITE = '#ffffff'  # white
-RED = '#ff0000'  # red
-BLUE = '#00ff00'  # blue
-GREEN = '#0000ff'  # green
-BLACK = '#000000'  # black
-ORANGE = '#ffa50'  # orange
-TOMATO = '#ff6347'  # tomato (a shade of red)
-HOT_PINK = '#ff69b4'  # hot pink (a kind of pink)
-REBECCA_PURPLE = '#663399'  # Rebecca Purple
-LIME_GREEN = '#89ff00'  # lime green (brighter than regular green)
-GREY0 = '#000000'  # gray 0 - basically the same as black
-GRAY37 = '#5e5e5e'  # gray 37 - lighter than black and gray 36
-GREY74 = '#bdbdbd'  # gray 74 - almost white
-GRAY99 = '#fcfcfc'  # gray 99 - almost white
+WHITE = '#ffffff'
+RED = '#ff0000'  
+BLUE = '#00ff00' 
+GREEN = '#0000ff'
+BLACK = '#000000'
+ORANGE = '#ffa50'
+TOMATO = '#ff6347'  
+HOT_PINK = '#ff69b4'  
+REBECCA_PURPLE = '#663399'  
+LIME_GREEN = '#89ff00'  
+GREY0 = '#000000'  
+GRAY37 = '#5e5e5e' 
+GREY74 = '#bdbdbd'  
+GRAY99 = '#fcfcfc'  
 
 
 def phoenix_main(i):
     """The main entry-point for the Phoenix fractal generator"""
 
     # the size of the image we will create is 512x512 pixels
-    # Look, I  know globals are bad, but I don't know how else to use those
-    # variables in here if I don't do it this way.  I didn't take any fancy CS
-    # classes, sue me
     global tkPhotoImage
     global win
     global s
@@ -324,46 +307,17 @@ def phoenix_main(i):
     win = Tk()
 
     print("Rendering %s fractal" % i, file=sys.stderr)
-    # construct a new TK PhotoImage object that is 512 pixels square...
     tkPhotoImage = PhotoImage(width=s, height=s)
-    # ... and use it to make a picture of a fractal
-    # TODO - should I have named this function "makeFractal()" or maybe just "makePicture"?
     makePictureOfFractal(f[i], i, ".png", win, grad, tkPhotoImage, GREY0, None, None, s)
 
     if Save_As_Picture:
-        # Write out the Fractal into a .gif image file
         tkPhotoImage.write(i + ".png")
-        #tkPhotoImage.write(f"{i}.png")
         print(f"\nDone in {time() - b4:.3f} seconds!", file=sys.stderr)
 
     if Save_As_Picture:
-        # Output the Fractal into a .png image
         tkPhotoImage.write(f"{i}.png")
         print("Saved image to file " + i + ".png", file=sys.stderr)
-        #tkPhotoImage.write(f"{i}.png")
 
-    # print a message telling the user how to quit or exit the program
     print("Close the image window to exit the program", file=sys.stderr)
     # Call tkinter.mainloop so the GUI remains open
     mainloop()
-
-
-## This is some weird Python thing... but all of the tutorials do it, so here we go
-#if __name__ == '__main__':
-#    # Process command-line arguments, allowing the user to select their fractal
-#    if len(sys.argv) < 2:
-#        print("Please provide the name of a fractal as an argument", file=sys.stderr)
-#        for i in f:
-#            print(f"\t{i}", file=sys.stderr)
-#        sys.exit(1)
-#
-#    elif sys.argv[1] not in f:
-#        print(f"ERROR: {sys.argv[1]} is not a valid fractal", file=sys.stderr)
-#        print("Please choose one of the following:", file=sys.stderr)
-#        for i in f:
-#            print(f"\t{i}", file=sys.stderr)
-#        sys.exit(1)
-#
-#    else:
-#        fratcal_config = getFractalConfigurationDataFromFractalRepositoryDictionary(f, sys.argv[1])
-#        phoenix_main(fratcal_config)

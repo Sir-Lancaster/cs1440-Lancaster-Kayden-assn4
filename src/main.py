@@ -113,40 +113,6 @@ else:
     # the fractal name is the 1st argument after the program name
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if PHOENX.count(sys.argv[1])>0: phoenix.phoenix_main(sys.argv[1])
 elif sys.argv[1] in MBROTS and len(sys.argv) > 1 and 2 <= len(sys.argv[0]):
     fractal = sys.argv[1]
