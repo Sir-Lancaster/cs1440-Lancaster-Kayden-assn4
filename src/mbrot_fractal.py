@@ -61,23 +61,7 @@ class BLACK: c = '#000000'
 # window = Tk()
 class WHITE:
     c = '#ffffff'
-#palette = [LIME_GREEN.c, '#a8f71b', '#c0ef34', '#d2ea4c', '#dfe563', '#e2db78',
-#        '#e0d28d', '#dfce9f', '#e0ceb1', '#e2d2c1', '#e5d9d0', '#eae1de',
-#        '#efebea', '#f7f5f5', WHITE.c,   '#f7f5f5', '#efebea', '#eae0de',
-#        '#e5d6d0', '#e2cdc1', '#e0c5b1', '#dfbf9f', '#e0bc8d', '#e2bd78',
-#        '#e5c163', '#eac94c', '#efd634', '#f7e81b', LEMON.c,   '#f7e81b',
-#        '#efd634', '#eac94c', '#e5c163', '#e2bd78', '#e0bc8d', '#dfbf9f',
-#        '#e0c5b1', '#e2cdc1', '#e5d6d0', '#eae0de', '#efebea', '#f7f5f5',
-#        WHITE.c,   '#f6f5f5', '#efeaea', '#e9dfdd', '#e4d4d0', '#e1c9c1',
-#        '#dfbfb0', '#deb69f', '#deae8c', '#e0a978', '#e2a563', '#e7a54c',
-#        '#eca834', '#f3ae1b', TANGERINE.c,'#f3ae1b','#eca834', '#e7a54c',
-#        '#e2a563', '#e0a978', '#deae8c', '#deb69f', '#dfbfb0', '#e1c9c1',
-#        '#e4d4d0', '#e9dfdd', '#efeaea', '#f6f5f5', WHITE.c,   '#f6f6f5',
-#        '#efefea', '#e5e9de', '#d5e3d1', '#c3dfca', '#b4ddd1', '#a3d2db',
-#        '#91adda', '#857fdb', '#a66bdc', '#dc56df', '#e33f9d', WHITE.c,
-#        '#f6f5f4', '#eeeee8', '#e2e7db', '#cedead', '#beefcc', '#abdbd9',
-#        '#99beda', '#858cda', '#9c70dc', '#d159de', '#e341a4',
-#        GRAPEFRUIT_PINK.c, ]
+
 
 # This color palette contains 100 color steps.
 palette = [CUSTARD.c, '#E0DA9E', '#E0DC9C', '#DFDE9B', '#DEDF9A', '#DBDE98',
@@ -109,36 +93,7 @@ img = None
 
 mainWindowObject = False
 
-# def PixelColorOrIndex(c, palette):
-#     """Return the color of the current pixel within the Mandelbrot set"""
-#     global z
-#     z = complex(0, 0)  # z0
-#
-#     global MAX_ITERATIONS
-#     global iter
-#
-#     len = MAX_ITERATIONS
-#     for iter in range(len):
-#         z = z * z + c  # Get z1, z2, ...
-#         global TWO
-#         if abs(z) > TWO:
-#             z = float(TWO)
-#             if iter >= len(palette):
-#                 iter = len(palette) - 1
-#             return palette[iter]
-#         elif abs(z) < TWO:
-#             continue
-#         elif abs(z) > seven:
-#             print("You should never see this message in production", file=sys.stderr)
-#             continue
-#             break
-#         elif abs(z) < 0:
-#             print(f"This REALLY should not have happened! z={z} iter={iter} MAX_ITERATIONS={MAX_ITERATIONS}", file=sys.stderr)
-#             sys.exit(1)
-#         else:
-#             pass
-#
-#     return palette[iter]  # The sequence is unbounded
+
 
 def PixelColorOrIndex(c, palette):
     """
@@ -155,10 +110,6 @@ def PixelColorOrIndex(c, palette):
 
     ## if a color scheme palette is passed in, return a color from the palette
     if palette is not None:
-        # maybe it had something to do with 'len' being an integer variable
-        # instead of a function variable.
-        # Somebody from StackOverflow suggested I do it this way
-        # IDK why, but it stopped crashing, and taht's all that matters!
         import builtins
         len = builtins.len
         len = len(palette)
@@ -244,32 +195,32 @@ def paint(fractals, imagename, window):
 
     portion = 0
     total_pixels = 512 * 512  # 262144
-    # loop
+
     for row in range(512, 0, -1):
         cc = []
         for col in range(512):
             x = minx + col * pixelsize
             y = miny + row * pixelsize
             # "Leaf" is the only well-behaved fractal - all of the others crash
-            #
+
             if imagename in [ 'leaf', ]:
                 idx = PixelColorOrIndex(complex(x, y), None)
                 color = palette[idx]
-            # The rest of the fractals
+            
             else:
                 color = PixelColorOrIndex(complex(x, y), palette)
             cc.append(color)
-            y = miny + row * pixelsize # prepare for next loop
-            x = minx + col * pixelsize # prepare for next loop
+            y = miny + row * pixelsize 
+            x = minx + col * pixelsize 
 
         img.put('{' + ' '.join(cc) + '}', to=(0, 512-row))
         portion = 512 - row / 512
         window.update()  # display a row of pixels
 
-        portion = 512 - row / 512 # prepare for next loop
+        portion = 512 - row / 512 
         # pixelsWrittenSoFar(portion, )  # This way isn't working let me try somthing eles...
         #total_pixles = pixelsWrittenSoFar(row, col)  # will equal 262144 when the program is finished
-        print(pixelsWrittenSoFar(row, col), end='\r', file=sys.stderr)  # the '\r' returns the cursor to the leftmost column
+        print(pixelsWrittenSoFar(row, col), end='\r', file=sys.stderr)  
 
 
 def pixelsWrittenSoFar(rows, cols):
@@ -283,15 +234,6 @@ def pixelsWrittenSoFar(rows, cols):
     # return pixels
     # return '[' + status_percent + ' ' + status_bar + ']'
     return ''.join(list(['[', status_percent, ' ', status_bar, ']']))
-
-
-# def pixelsWrittenSoFar(rows, cols):
-#     pixels = 0
-#     for r in range(rows + 1):
-#         pixels = pixels + cols
-#     print(pixels, "pixels have been output so far", file=sys.stderr)
-#     return pixels
-
 
 
 # These are the different views of the Mandelbrot set you can make with this
