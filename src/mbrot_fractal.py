@@ -24,20 +24,8 @@
 import sys
 import time
 from tkinter import Tk, Canvas, PhotoImage, mainloop
-from math import sqrt, cos, cosh, sin, sinh, remainder, acos, acosh, asin, asinh
-
-# These are the imports that I usually import
-import turtle
-import os
-import os.path
 import sys
 import time
-import math
-
-# this import caused problems on my Windows computer...
-# import numpy
-
-
 # Object oriented programing FTW!!!
 class GRAPEFRUIT_PINK: c = '#E8283F'
 class LEMON: c = '#FDFF00'

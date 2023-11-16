@@ -3,7 +3,7 @@
 | Date        | Time Spent | Events
 |-------------|------------|--------------------
 | November 13 | 1.6 hrs    | Finished phase 0, made progress on the smells report.
-| November 15 | 1.5 hrs    | Finished the smells report, made progress on phase 1.  
+| November 15 | 2.5 hrs    | Finished the smells report, made progress on phase 1.  
 | TOTAL       | 12.5 hours | *Your TOTAL should agree with your daily entries*
 
 
