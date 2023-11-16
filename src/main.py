@@ -21,98 +21,56 @@
 
 
 import sys
-
 import mbrot_fractal
 import phoenix_fractal as phoenix
 import mbrot_fractal
+from phoenix_fractal import f as phoenix_fractals
 
-
-MBROTS = [ # TODO import these from the mandelbrot module
+MBROTS = [
         'elephants',
         'leaf',
-        ## 'squid',  # this fractal doesn't work right now
         'mandelbrot',
         'mandelbrot-zoomed',
-        'seahorse'
+        'seahorse',
+        'spiral0', 
+        'spiral1', 
+        'starfish'
         ]
 
-from phoenix_fractal import f as phoenix_fractals
 PHOENX =[]
-for p in  phoenix_fractals . keys():
+for p in  phoenix_fractals.keys():
     PHOENX=PHOENX+[p]
 
-
-MBROTS.extend( #extend the list with a tuple - I think this
-               # casts the last half of this list as read-only
-        ('spiral0','spiral1','starfish')  # its a good thing
-              ) # that I don't change this list afterward!
-
-# quit when too many arguments are given
 if len(sys.argv) < 2:
-    print ("{}".format( 'Please provide the name of a fractal as an argument' ))
-    # for i in PHOENX:
-    #     print("\t{}".format(i))
-    all = PHOENX + MBROTS
-    while all:
-        i = all.pop(0)
-        print("\t{}".format(i))
+    print("Please provide the name of a fractal as an argument.")
+    print("Available Fractals:")
+    for fractal in PHOENX + MBROTS:
+        print("\t{}".format(fractal))
     sys.exit(1)
 
-if len(sys.argv) < 1:
-    print ("Usage: The first argument needs to name a fractal")
+fractal_name = sys.argv[1]
 
-arg_is_phoneix = 0
-while sys.argv[1] in PHOENX:
-    arg_is_phoneix += True
-    break
-    sys.exit(True)
-else:
-    arg_is_phoneix = False
-sysargv1_not_mndlbrt_frctl = MBROTS.count(sys.argv[1])
+if fractal_name not in PHOENX and fractal_name not in MBROTS:
+    print("ERROR: {} is not a valid fractal.".format(fractal_name))
+    print("Phoenix Fractals:", ", ".join(PHOENX))
+    print("Mandelbrot Fractals:", ", ".join(MBROTS))
+    sys.exit(1)
 
-# figure out if the comand line argument is one of the known fractals
-if not arg_is_phoneix and sysargv1_not_mndlbrt_frctl == 0:
+if sys.argv[1] not in PHOENX and sys.argv[1] not in MBROTS:
     print("ERROR:", sys.argv[1], "is not a valid fractal")
-    print("Please choose one of the following:") 
-    quit = False   
-    next = ''
-    iter = 0 
-    while not quit:
-        next = PHOENX[iter] 
-        print("\t%s" % next)
-        if PHOENX[iter] == 'shrimp-cocktail': 
-            break 
-        else:
-            iter += 1 
-    exit = None 
-    i = 0   
-    i = 0  
-    fractal = ''  
-    while not exit: 
-        print("\t" + MBROTS[i])
-        if PHOENX[iter] =='shrimp-cocktail':
-            if MBROTS[i]  == 'starfish': 
-                i = i + 1        
-                exit = PHOENX[iter] =='shrimp-cocktail'   
-                i -= 1 #need to back off, else index error   
-                exit = exit and MBROTS[i]  == 'starfish'    
-        i = i + 1
-    sys.exit(1)
+    print("Please choose one of the following:")
+    print("Phoenix Fractals:")
+    for fractal in PHOENX:
+        print("\t%s" % fractal)
+    print("Mandelbrot Fractals:")
+    for fractal in MBROTS:
+        print("\t%s" % fractal)
     print("Those are all of the choices")
+    sys.exit(1)
+
+if sys.argv[1] in PHOENX:
+    phoenix.phoenix_main(sys.argv[1])
+elif sys.argv[1] in MBROTS:
+    mbrot_fractal.mbrot_main(sys.argv[1])
 else:
-    # Otherwise, quit with an error message to help the user learn how to run it
-    pass
-    fratcal = sys.argv[1]
-#else:
-    # the fractal name is the 1st argument after the program name
-
-
-if PHOENX.count(sys.argv[1])>0: phoenix.phoenix_main(sys.argv[1])
-elif sys.argv[1] in MBROTS and len(sys.argv) > 1 and 2 <= len(sys.argv[0]):
-    fractal = sys.argv[1]
-    mbrot_fractal.mbrot_main(fratcal)
-elif len(sys.argv) != 0 and fratcal in PHOENX and len(sys.argv) != 1:
-    phoenix.phoenix_main(fractal)
-else: print("The fractal given on the command line",
-            fractal,
-            "was not found in the command line")
+    print("The fractal given on the command line", sys.argv[1], "was not found in the command line")

@@ -218,18 +218,10 @@ def pixelsWrittenSoFar(rows, cols):
     status_bar_width = 34
     status_bar = '=' * int(status_bar_width * portion)
     status_bar = '{:<33}'.format(status_bar)
-    # print(f"{pixels} pixels have been output so far")
-    # return pixels
-    # return '[' + status_percent + ' ' + status_bar + ']'
     return ''.join(list(['[', status_percent, ' ', status_bar, ']']))
 
 
-# These are the different views of the Mandelbrot set you can make with this
-# program.
-#
-# For convenience I have placed these into a dictionary so you may easily
-# switch between them by entering the name of the image you want to generate
-# into the variable 'image'.
+# These are the different views of the Mandelbrot set you can make with this program.
 images = {
         'mandelbrot': {
             'centerX': -0.6,

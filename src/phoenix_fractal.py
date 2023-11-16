@@ -22,39 +22,15 @@
 
 
 # These are the imports that I usually import
-import turtle
-import os
-import os.path
 import sys
 import time
-
-# These are imports people on StackOverflow use all the time.
-# I've begun importing these just in case I need to borrow some code that I find online
-# This way, whatever I paste is guaranteed to work without making more errors!
-import functools
-import itertools
-import builtins
-import pathlib
-import pickle
-import importlib
-import unittest
-import csv
-import argparse
-import asyncio
-import http, html
-# these ones make my programs crash on some of my computers
-# I'll just comment them out, just in case I need them, so I don't have to look up how to import them on SO
-#import numpy
-#from torch import Tensor
-#import pandas
-
 
 # these ones are the ones that i'm using in this program
 from tkinter import Tk, Canvas, PhotoImage, mainloop
 from time import time
 
 
-SPC = chr(0o40)  # octal numbers
+SPC = chr(0o40)  # octal number
 s = 0o1000
 
 def getColorFromPalette(z):
@@ -276,7 +252,6 @@ f = {
         }
 
 
-# This is how you write colors for computers
 WHITE = '#ffffff'
 RED = '#ff0000'  
 BLUE = '#00ff00' 
