@@ -21,8 +21,8 @@
 
 
 import unittest
-from mbrot_fractal import PixelColorOrIndex, palette, MAX_ITERATIONS, pixelsWrittenSoFar
-
+from ImagePainter import pixelsWrittenSoFar, PixelColorOrIndex
+from Palette import ultimate_palette
 
 # autocmd BufWritePost <buffer> !python3 runTests.py
 
@@ -30,12 +30,12 @@ class TestMandelbrot(unittest.TestCase):
     def test_pixelColorOrIndex(self):
         """Mandelbrot fractal configuration and algorithm output the expected colors at key locations"""
         # test the pixel color...
-        self.assertEqual(PixelColorOrIndex(complex(0, 0), palette), '#7D387D')
-        self.assertEqual(PixelColorOrIndex(complex(-0.751, 1.1075), palette), '#E0DC9C')
-        self.assertEqual(PixelColorOrIndex(complex(-0.2, 1.1075), palette), '#CDDC93')
-        self.assertEqual(PixelColorOrIndex(complex(-0.75, 0.1075), palette), '#79D078')
-        self.assertEqual(PixelColorOrIndex(complex(-0.748, 0.1075), palette), '#59C0BD')
-        self.assertEqual(PixelColorOrIndex(complex(-0.7562500000000001, 0.078125), palette), '#6ECB8A')
+        self.assertEqual(PixelColorOrIndex(complex(0, 0), ultimate_palette), '#002277')
+        self.assertEqual(PixelColorOrIndex(complex(-0.751, 1.1075), ultimate_palette), '#E0DC9C')
+        self.assertEqual(PixelColorOrIndex(complex(-0.2, 1.1075), ultimate_palette), '#CDDC93')
+        self.assertEqual(PixelColorOrIndex(complex(-0.75, 0.1075), ultimate_palette), '#79D078')
+        self.assertEqual(PixelColorOrIndex(complex(-0.748, 0.1075), ultimate_palette), '#59C0BD')
+        self.assertEqual(PixelColorOrIndex(complex(-0.7562500000000001, 0.078125), ultimate_palette), '#6ECB8A')
 
         # ...or Index
         self.assertEqual(12, PixelColorOrIndex(complex(-0.7562500000000001, -0.234375), None))
@@ -57,7 +57,7 @@ class TestMandelbrot(unittest.TestCase):
 
     def test_palleteLength(self):
         """Palette contains the expected number of colors"""
-        self.assertEqual(111, len(palette))
+        self.assertEqual(213, len(ultimate_palette))
 
 
 if __name__ == '__main__':

@@ -53,7 +53,7 @@ def getColorFromPalette(z):
 
 
 
-def getFractalConfigurationDataFromFractalRepositoryDictionary(dictionary, name):
+def getFractalConfig(dictionary, name):
     """Make sure that the fractal configuration data repository dictionary
     contains a key by the name of 'name'
 
@@ -63,10 +63,9 @@ def getFractalConfigurationDataFromFractalRepositoryDictionary(dictionary, name)
     Return False otherwise
     """
     for key in dictionary:
-        if key in dictionary:
-            if key == name:
-                value = dictionary[key]
-                return key
+        if key == name:
+            return dictionary[key]
+    return None
 
 
 Save_As_Picture = True
