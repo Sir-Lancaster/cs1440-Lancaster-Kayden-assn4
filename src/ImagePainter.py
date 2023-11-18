@@ -4,6 +4,8 @@ from tkinter import Tk, Canvas, PhotoImage, mainloop
 import sys
 import Palette
 import FractalInformation
+import Mandelbrot
+import Phoenix
 
 frac_info = FractalInformation.fractalinformation() 
 
@@ -16,7 +18,6 @@ def paint(fractals, imagename, window, img):     # Used for Mandelbrot fractals
     maxx = fractal['centerX'] + (fractal['axisLen'] / 2.0)
     miny = fractal['centerY'] - (fractal['axisLen'] / 2.0)
     maxy = fractal['centerY'] + (fractal['axisLen'] / 2.0)
-
 
     canvas = Canvas(window, width=512, height=512, bg='#000000')
     canvas.pack()
@@ -132,11 +133,13 @@ def phoenix_main(imagename):
     if Save_As_Picture:
         tkPhotoImage.write(imagename + ".png")
         print(f"\nDone in {time.time() - before:.3f} seconds!", file=sys.stderr)
-
-    if Save_As_Picture:
         tkPhotoImage.write(f"{imagename}.png")
         print("Saved image to file " + imagename + ".png", file=sys.stderr)
 
+    coordinate = complex(-0.5, 0.0)  
+    iteration_count = Mandelbrot.mandelbrot_Count(coordinate)
+    print(f"For coordinate {coordinate}, Mandelbrot iteration count: {iteration_count}")
+    
     print("Close the image window to exit the program", file=sys.stderr)
     mainloop()
     
@@ -155,6 +158,11 @@ def mbrot_main(image):
         img.write(f"{image}.png")
         print("Saved image to file " + image + ".png", file=sys.stderr)
 
+    coordinate = complex(-0.5, 0.0)  
+    iteration_count = Mandelbrot.mandelbrot_Count(coordinate)
+
+    print(f"For coordinate {coordinate}, Mandelbrot iteration count: {iteration_count}")
+
     print("Close the image window to exit the program", file=sys.stderr)
     mainloop()
 
@@ -163,4 +171,4 @@ if __name__ == '__main__':
     # phoenix_main('phoenix')    
     
     # To test mandelbrot fractals uncomment the line below and replace imagename with the desired fractal.
-    mbrot_main('mandelbrot')
+    mbrot_main('starfish')

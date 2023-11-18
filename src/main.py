@@ -21,12 +21,9 @@
 
 
 import sys
-import mbrot_fractal
-import phoenix_fractal as phoenix
-from phoenix_fractal import f as phoenix_fractals
 import FractalInformation
 import ImagePainter
-
+frac_info = FractalInformation.fractalinformation()
 MBROTS = [
         'elephants',
         'leaf',
@@ -38,9 +35,12 @@ MBROTS = [
         'starfish'
         ]
 
-PHOENX =[]
-for p in  phoenix_fractals.keys():
-    PHOENX=PHOENX+[p]
+PHOENX = [
+        'phoenix',
+        'peacock',
+        'monkey-knife-fight',
+        'shrimp-cocktail'
+        ]
 
 if len(sys.argv) < 2:
     print("Please provide the name of a fractal as an argument.")
@@ -70,8 +70,8 @@ if sys.argv[1] not in PHOENX and sys.argv[1] not in MBROTS:
     sys.exit(1)
 
 if sys.argv[1] in PHOENX:
-    phoenix.phoenix_main(sys.argv[1])
+    ImagePainter.phoenix_main(sys.argv[1])
 elif sys.argv[1] in MBROTS:
-    mbrot_fractal.mbrot_main(sys.argv[1])
+    ImagePainter.mbrot_main(sys.argv[1])
 else:
     print("The fractal given on the command line", sys.argv[1], "was not found in the command line")
