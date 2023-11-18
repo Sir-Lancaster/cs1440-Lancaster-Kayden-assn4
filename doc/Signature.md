@@ -5,6 +5,7 @@
 | November 13 | 1.6 hrs    | Finished phase 0, made progress on the smells report.
 | November 15 | 2.5 hrs    | Finished the smells report, made progress on phase 1.  
 | November 16 | 1.15 hrs   | More work on phase 1 and began phase 2. 
+| November 17 | 5 hrs      | Implemented my main.py changes.
 | TOTAL       | 12.5 hours | *Your TOTAL should agree with your daily entries*
 
 

@@ -72,7 +72,6 @@ def getColorFromPalette(z):
             z = z * z + c  # + zPrev * pheonix
     # TODO: One of these returns occasionally makes the program crash sometimes
     return grad[101]         # Else this is a bounded sequence
-    return grad[102]         # Else this is a bounded sequence
 
 
 def getFractalConfigurationDataFromFractalRepositoryDictionary(dictionary, name):

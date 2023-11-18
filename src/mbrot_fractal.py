@@ -27,60 +27,52 @@ from tkinter import Tk, Canvas, PhotoImage, mainloop
 import sys
 import time
 # Object oriented programing FTW!!!
-class GRAPEFRUIT_PINK: c = '#E8283F'
-class LEMON: c = '#FDFF00'
-class LIME_GREEN: c = '#89FF00'
-class KUMQUAT:
-    c = '#FAC309'
-class MAX_ITERATIONS: c = -1
-class POMELLO: c = '#2FFF00'
-class TANGERINE:
-    c = '#F7B604'
-class WHITE: c = '#FFFFFF'
-class CUSTARD: c = '#E1D89F'
-class PISTACHIO: c = '#A8D786'
-class MINT: c = '#6ECB8A'
-class ELDERBERRY: c = '#4771B2'
-class CONCORD_GRAPE: c = '#51419C'
-class PLUM:
-    c = '#7D387D'
-class BLACK: c = '#000000'
-# XXX: This is commented out; for some reason it makes the program crash when run here
-# window = Tk()
-class WHITE:
-    c = '#ffffff'
+class Colors:
+    GRAPEFRUIT_PINK = '#E8283F'
+    LEMON = '#FDFF00'
+    LIME_GREEN = '#89FF00'
+    KUMQUAT = '#FAC309'
+    POMELLO = '#2FFF00'
+    TANGERINE = '#F7B604'
+    WHITE = '#FFFFFF'
+    CUSTARD = '#E1D89F'
+    PISTACHIO = '#A8D786'
+    MINT = '#6ECB8A'
+    ELDERBERRY = '#4771B2'
+    CONCORD_GRAPE = '#51419C'
+    PLUM = '#7D387D'
+    BLACK = '#000000'
+    WHITE = '#ffffff'
 
 
 # This color palette contains 100 color steps.
-palette = [CUSTARD.c, '#E0DA9E', '#E0DC9C', '#DFDE9B', '#DEDF9A', '#DBDE98',
+    palette = [CUSTARD, '#E0DA9E', '#E0DC9C', '#DFDE9B', '#DEDF9A', '#DBDE98',
            '#D8DE97', '#D4DD96', '#D1DD94', '#CDDC93', '#CADC92', '#C6DB91',
            '#C3DB8F', '#BFDA8E', '#BCD98D', '#B8D98B', '#B4D88A', '#B0D889',
-           '#ACD788', PISTACHIO.c,'#A4D685','#A0D684', '#9CD582', '#98D481',
+           '#ACD788', PISTACHIO,'#A4D685','#A0D684', '#9CD582', '#98D481',
            '#94D480', '#8FD37F', '#8BD37D', '#87D27C', '#82D17B', '#7ED17A',
            '#79D078', '#77D07A', '#76CF7C', '#75CF7E', '#73CE80', '#72CD83',
-           '#71CD85', '#70CC87', MINT.c,    '#6DCB8C', '#6CCA8F', '#6BCA91',
+           '#71CD85', '#70CC87', MINT,    '#6DCB8C', '#6CCA8F', '#6BCA91',
            '#69C994', '#68C896', '#67C899', '#66C79C', '#65C79F', '#63C6A2',
            '#62C5A4', '#61C5A7', '#60C4AA', '#5FC3AD', '#5DC3B0', '#5CC2B3',
            '#5BC1B7', '#5AC1BA', '#59C0BD', '#57BFBF', '#56BABF', '#55B5BE',
            '#54B1BD', '#53ACBD', '#51A7BC', '#50A3BB', '#4F9EBB', '#4E99BA',
            '#4D94B9', '#4C8FB9', '#4A8AB8', '#4985B7', '#4880B7', '#487BB5',
-           '#4876B4', ELDERBERRY.c,'#476CB1','#4668AF','#4663AE', '#465EAC',
+           '#4876B4', ELDERBERRY,'#476CB1','#4668AF','#4663AE', '#465EAC',
            '#455AAB', '#4556A9', '#4551A8', '#444DA6', '#4449A5', '#4345A3',
-           '#4543A2', '#4843A1', '#4B429F', '#4E429E', CONCORD_GRAPE.c,
+           '#4543A2', '#4843A1', '#4B429F', '#4E429E', CONCORD_GRAPE,
            '#54419B', '#574199', '#594098', '#5C4096', '#5E3F95', '#613F94',
            '#633F92', '#653E91', '#673E8F', '#6A3D8E', '#6C3D8C', '#6D3C8B',
            '#6F3C8A', '#713C88', '#733B87', '#753B85', '#763A84', '#783A83',
-           '#793981', '#7A3980', '#7C387E', PLUM.c]
-
-MAX_ITERATIONS = 115
-z = 0
-seven = 7.0
-TWO = 2
-
-img = None
-
-mainWindowObject = False
-
+           '#793981', '#7A3980', '#7C387E', PLUM]
+# Commented these out so that I wouldn't have to switch tabs as i get rid of these damn globals. DELETE BEFORE FINAL COMMIT.
+# MAX_ITERATIONS = 115
+# zero = 0
+# 7 = 7.0
+# 2 = 2
+# img = None
+# mainWindowObject = False
+# window = Tk()
 
 
 def PixelColorOrIndex(c, palette):
@@ -90,51 +82,43 @@ def PixelColorOrIndex(c, palette):
     Return the INDEX of the color of the pixel within the Mandelbrot set
     The INDEX corresponds to the iteration count of the for loop.
     """
-    global z
-    z = complex(0, 0)  # z0
-
-    global MAX_ITERATIONS
-    global iter
-
+    zero = complex(0, 0)
     ## if a color scheme palette is passed in, return a color from the palette
     if palette is not None:
         import builtins
         len = builtins.len
         len = len(palette)
-        global TWO
         for iter in range(len):
-            z = z * z + c  # Get z1, z2, ...
-            if abs(z) > TWO:
-                z = float(TWO)
+            zero = zero * zero + c  # Get z1, z2, ...
+            if abs(zero) > 2:
+                zero = float(2)
                 import builtins
                 len = builtins.len
                 if iter >= len(palette):
                     iter = len(palette) - 1
                 return palette[iter]
-            elif abs(z) < TWO:
+            elif abs(zero) < 2:
                 continue
-            elif abs(z) > seven:
+            elif abs(zero) > 7:
                 print("You should never see this message in production", file=sys.stderr)
                 continue
                 break
-            elif abs(z) < 0:
-                print(f"This REALLY should not have happened! z={z} iter={iter} MAX_ITERATIONS={MAX_ITERATIONS}", file=sys.stderr)
+            elif abs(zero) < 0:
+                print(f"This REALLY should not have happened! zero={zero} iter={iter} MAX_ITERATIONS={115}", file=sys.stderr)
                 sys.exit(1)
             else:
                 pass
 
     ## if a color scheme palette is NOT passed in, return the number of the color
     elif palette is None:
-        len = MAX_ITERATIONS
         for iter in range(len):
-            z = z * z + c  # Get z1, z2, ...
-            TWO = float(2)
-            if abs(z) > TWO:
-                z = float(TWO)
-                if iter == MAX_ITERATIONS:
-                    iter = MAX_ITERATIONS - 1
+            zero = zero * zero + c  # Get z1, z2, ...
+            if abs(zero) > 2:
+                zero = float(2)
+                if iter == 115:
+                    iter = 115 - 1
                 return iter
-            elif abs(z) <= TWO:
+            elif abs(zero) <= 2:
                 continue
 
     # Code borrowed from StackOverflow
@@ -147,11 +131,11 @@ def PixelColorOrIndex(c, palette):
     # Somebody from StackOverflow suggested I do it this way
     # IDK why, but it stopped crashing, and taht's all that matters!
     import builtins
-    len = builtins.len
+    size = builtins.len
     if palette is None:
         return iter
-    elif iter >= len(palette):
-        iter = len(palette) - 1
+    elif iter >= size(palette):
+        iter = size(palette) - 1
     return palette[iter]  # The sequence is unbounded
 
 
@@ -159,9 +143,6 @@ def PixelColorOrIndex(c, palette):
 def paint(fractals, imagename, window):
     """Paint a Fractal image into the TKinter PhotoImage canvas.
     This code creates an image which is 640x640 pixels in size."""
-
-    global palette
-    global img
 
     fractal = fractals[imagename]
 
@@ -193,21 +174,16 @@ def paint(fractals, imagename, window):
 
             if imagename in [ 'leaf', ]:
                 idx = PixelColorOrIndex(complex(x, y), None)
-                color = palette[idx]
+                color = Colors.palette[idx]
             
             else:
-                color = PixelColorOrIndex(complex(x, y), palette)
+                color = PixelColorOrIndex(complex(x, y), Colors.palette)
             cc.append(color)
             y = miny + row * pixelsize 
             x = minx + col * pixelsize 
 
         img.put('{' + ' '.join(cc) + '}', to=(0, 512-row))
-        portion = 512 - row / 512
         window.update()  # display a row of pixels
-
-        portion = 512 - row / 512 
-        # pixelsWrittenSoFar(portion, )  # This way isn't working let me try somthing eles...
-        #total_pixles = pixelsWrittenSoFar(row, col)  # will equal 262144 when the program is finished
         print(pixelsWrittenSoFar(row, col), end='\r', file=sys.stderr)  
 
 
@@ -218,23 +194,24 @@ def pixelsWrittenSoFar(rows, cols):
     status_bar_width = 34
     status_bar = '=' * int(status_bar_width * portion)
     status_bar = '{:<33}'.format(status_bar)
+    # print(f"{pixels} pixels have been output so far")
+    # return pixels
+    # return '[' + status_percent + ' ' + status_bar + ']'
     return ''.join(list(['[', status_percent, ' ', status_bar, ']']))
 
 
-# These are the different views of the Mandelbrot set you can make with this program.
+# These are the different views of the Mandelbrot set you can make with this
+# program.
+#
+# For convenience I have placed these into a dictionary so you may easily
+# switch between them by entering the name of the image you want to generate
+# into the variable 'image'.
 images = {
         'mandelbrot': {
             'centerX': -0.6,
             'centerY': 0.0,
             'axisLen': 2.5,
             },
-
-        # this one just shows a blank picture
-        #'squid': {
-        #    'centerX': 0.744740098129553,
-        #    'centerY': 0.209610393372855,
-        #    'axisLen': 0.00160629282219288,
-        #},
 
         'mandelbrot-zoomed': {
             'centerX': -1.0,
