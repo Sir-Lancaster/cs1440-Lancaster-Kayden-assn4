@@ -23,8 +23,9 @@
 import sys
 import mbrot_fractal
 import phoenix_fractal as phoenix
-import mbrot_fractal
 from phoenix_fractal import f as phoenix_fractals
+import FractalInformation
+import ImagePainter
 
 MBROTS = [
         'elephants',
