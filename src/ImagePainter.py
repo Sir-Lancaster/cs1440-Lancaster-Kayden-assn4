@@ -7,7 +7,6 @@ import FractalInformation
 import Mandelbrot
 import Phoenix
 
-frac_info = FractalInformation.fractalinformation() 
 
 
 def paint(fractals, imagename, window, img):     # Use for Mandelbrot fractals
@@ -26,39 +25,41 @@ def paint(fractals, imagename, window, img):     # Use for Mandelbrot fractals
     pixelsize = abs(maxx - minx) / 512
 
     for row in range(512, 0, -1):
-        cc = [PixelColorOrIndex(complex(minx + col * pixelsize, miny + row * pixelsize), Palette.ultimate_palette)
+        cc = [PixelColorOrIndex(complex(minx + col * pixelsize, miny + row * pixelsize), Palette.palette)
             for col in range(512)]
 
         img.put('{' + ' '.join(cc) + '}', to=(0, 512 - row))
         window.update()
         print(pixelsWrittenSoFar(row, 512), end='\r', file=sys.stderr)
 
-def makePictureOfFractal(frac_image, size_of_image, BG_Color, photo_image, window):          # Use for phoenix fractals.
+def makePictureOfFractal(f, p, w, s):
+    """Paint a Fractal image into the TKinter PhotoImage canvas.
+    Assumes the image is 640x640 pixels."""
 
-    min_coord = (frac_image['centerX'] - frac_image['axisLen'] / 2.0, frac_image['centerY'] - frac_image['axisLen'] / 2.0)
-    max_coord = (frac_image['centerX'] + frac_image['axisLen'] / 2.0, frac_image['centerY'] + frac_image['axisLen'] / 2.0)
+    # Compute the minimum and maximum coordinates of the picture
+    min_x = f['centerX'] - (f['axisLen'] / 2.0)
+    min_y = f['centerY'] - (f['axisLen'] / 2.0)
+    max_x = f['centerX'] + (f['axisLen'] / 2.0)
+    max_y = f['centerY'] + (f['axisLen'] / 2.0)
 
-    canvas = Canvas(window, width=size_of_image, height=size_of_image, bg=BG_Color)
-    canvas.pack()
-    canvas.create_image((size_of_image/2, size_of_image/2), image=photo_image, state="normal")
+    # Display the image on the screen
+    tk_interface_canvas = Canvas(w, width=s, height=s, bg="white")
+    tk_interface_canvas.pack()
 
-    size = abs(max_coord[0] - min_coord[0]) / size_of_image
+    # Create the TK PhotoImage object that backs the Canvas Object
+    tk_interface_canvas.create_image((s/2, s/2), image=p, state="normal")
+    tk_interface_canvas.pack()
 
-    for row in range(size_of_image, 0, -1):
-        pixels = []
-        for col in range(size_of_image):
-            X = min_coord[0] + col * size
-            Y = min_coord[1] + row * size
-            cp = getColorFromPalette(complex(X, Y))
-            pixels.append(cp)
+    # Compute the size of one pixel in the imaginary plane
+    size = abs(max_x - min_x) / s
 
-        pixls = '{' + ' '.join(pixels) + '}'
-        photo_image.put(pixls, (0, size_of_image - row))
-        window.update()
+    # Iterate over rows and columns to fill the image
+    for r in range(s, 0, -1):
+        row_colors = [getColorFromPalette(complex(min_x + c * size, min_y + r * size)) for c in range(s)]
+        pixel_data = '{' + ' '.join(row_colors) + '}'
+        p.put(pixel_data, (0, s - r))
+        w.update()
 
-        fraction_written = (size_of_image - row) / size_of_image
-        status_bar = '=' * int(34 * fraction_written)
-        print(f"[{fraction_written:>4.0%}{' ' * 33}{status_bar}]", end="\r", file=sys.stderr)
         
 def pixelsWrittenSoFar(rows, cols):
     portion = (512 - rows) / 512
@@ -98,25 +99,24 @@ def PixelColorOrIndex(c, palette):
         return max_iterations - 1  # Default index when the escape condition is not met
     
 def getColorFromPalette(z):
-    c = complex(0.5667, 0.0)
-    phoenix_constant = complex(-0.5, 0.0)
+    """
+    Return the index of the color of the current pixel
+    within the Phoenix fractal in the palette array
+    """
+    juliaconstant = complex(0.5667, 0.0)
+    pheonix = complex(-0.5, 0.0)
+    zFlipped = complex(z.imag, z.real)      # This orients the image properly. Without it the image is rotated 90 degrees clockwise. 
+    zPrev = 0+0j                            # zPrevious is the PREVIOUS Z value, defaulting at zero
+    z = zFlipped                            # set Z back to zFlipped
 
-    # Reflect the components of the complex number z
-    z_flipped = complex(z.imag, z.real)
+    for i in range(102):
+        zSave = z 
+        z = z * z + juliaconstant + (pheonix * zPrev)
+        zPrev = zSave                       # Set the prevZ value for the next iteration
+        if abs(z) > 2:                      # if the absolute value of Z is graeter or equal than 2, then return that color
+            return Palette.grad[i]                  
+    return Palette.grad[101]
 
-    # Initialize the previous Z value
-    z_prev = 0 + 0j
-
-    # Iterate over the range of colors in the palette
-    for i in range(101):
-        z_save = z  # Save the current Z value before overwriting it
-        z = z * z + c + (phoenix_constant * z_prev)
-        z_prev = z_save  # Set the prevZ value for the next iteration
-
-        if abs(z) > 2:
-            return Palette.ultimate_palette[i]  # The sequence is unbounded
-
-    return Palette.ultimate_palette[101]
 
 def getFractalConfig(dictionary, name):
     """Make sure that the fractal configuration data repository dictionary
@@ -132,33 +132,37 @@ def getFractalConfig(dictionary, name):
             return dictionary[key]
     return None
 
-def phoenix_main(imagename):
+def phoenix_main(image):
     """The main entry-point for the Phoenix fractal generator"""
     Save_As_Picture = True
-    size_of_image = 512
-    before = time.time()
-    window = Tk()
-    Background = Palette.BLACK
-    tkPhotoImage = PhotoImage(width=size_of_image, height=size_of_image)
-    fractal_config = getFractalConfig(frac_info.images, imagename)
+    size = 512 
+    b4 = time.time()
+    # Set up the GUI
+    win = Tk()
+    frac_info = FractalInformation.fractalinformation() 
+    print(f"Rendering {image} fractal", file=sys.stderr)
 
-    print("Rendering %s fractal" % imagename, file=sys.stderr)
-    
-    makePictureOfFractal(frac_info.images[imagename], size_of_image, Background, tkPhotoImage, window)
+    # Construct a new TK PhotoImage
+    tk_photo_image = PhotoImage(width=size, height=size)
+
+    # Call make_picture_of_fractal with correct arguments
+    makePictureOfFractal(frac_info.images[image], tk_photo_image, win, size)
+
     if Save_As_Picture:
-        tkPhotoImage.write(imagename + ".png")
-        print(f"\nDone in {time.time() - before:.3f} seconds!", file=sys.stderr)
-        tkPhotoImage.write(f"{imagename}.png")
-        print("Saved image to file " + imagename + ".png", file=sys.stderr)
+        # Write out the Fractal into a .gif image file
+        tk_photo_image.write(f"{image}.png")
+        print(f"\nDone in {time.time() - b4:.3f} seconds!", file=sys.stderr)
 
-    coordinate = complex(-0.5, 0.0)  
-    iteration_count = Mandelbrot.mandelbrot_Count(coordinate)
-    print(f"For coordinate {coordinate}, Mandelbrot iteration count: {iteration_count}")
-    
+    if Save_As_Picture:
+        # Output the Fractal into a .png image
+        tk_photo_image.write(f"{image}.png")
+        print(f"Saved image to file {image}.png", file=sys.stderr)
+
     print("Close the image window to exit the program", file=sys.stderr)
     mainloop()
     
 def mbrot_main(image):
+    frac_info = FractalInformation.fractalinformation() 
     Save_As_Picture = True
     before = time.time()
     window = Tk()
@@ -183,7 +187,7 @@ def mbrot_main(image):
 
 if __name__ == '__main__':
     # To test phoenix fractals uncomment the line below and replace imagename with the desired fractal.
-    phoenix_main('phoenix')    
+    phoenix_main('peacock')    
     
     # To test mandelbrot fractals uncomment the line below and replace imagename with the desired fractal.
-    # mbrot_main('starfish')
+    # mbrot_main('starfis')
