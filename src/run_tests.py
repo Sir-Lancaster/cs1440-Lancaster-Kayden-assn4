@@ -22,11 +22,11 @@
 
 import unittest
 
-from tests import test_mandelbrot, test_phoenix
+from tests import test_mandelbrot, test_phoenix, test_Fractal_Information
 
 
 suite = unittest.TestSuite()
-tests = [test_mandelbrot.TestMandelbrot, test_phoenix.TestPhoenix]
+tests = [test_mandelbrot.TestMandelbrot, test_phoenix.TestPhoenix, test_Fractal_Information.TestFractalInformation]
 
 for test in tests:
     suite.addTest(unittest.defaultTestLoader.loadTestsFromTestCase(test))
