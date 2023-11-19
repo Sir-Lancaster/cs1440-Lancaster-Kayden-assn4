@@ -21,8 +21,9 @@
 
 
 import unittest
-from phoenix_fractal import getColorFromPalette, grad, WHITE, f
-from phoenix_fractal import getFractalConfigurationDataFromFractalRepositoryDictionary
+from Palette import grad
+from ImagePainter import getFractalConfig, getColorFromPalette
+import FractalInformation
 
 
 # autocmd BufWritePost <buffer> !python3 runTests.py
@@ -43,19 +44,21 @@ class TestPhoenix(unittest.TestCase):
         self.assertEqual(getColorFromPalette(complex(-0.186, -0.685)), '#ffe7af')
 
     def test_dictionaryGetter(self):
+        frac_info = FractalInformation.fractalinformation()
+        f = frac_info.images
         """Names of fractals in the configuration dictionary are as expected"""
-        self.assertIsNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'absent'))
-        self.assertIsNotNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'phoenix'))
-        self.assertIsNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, ''))
-        self.assertIsNotNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'peacock'))
-        self.assertIsNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'Still Not In Here'))
-        self.assertIsNotNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'monkey-knife-fight'))
-        self.assertIsNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'shrimp-coctail'))
-        self.assertIsNotNone(getFractalConfigurationDataFromFractalRepositoryDictionary(f, 'shrimp-cocktail'))
+        self.assertIsNone(getFractalConfig(f, 'absent'))
+        self.assertIsNotNone(getFractalConfig(f, 'phoenix'))
+        self.assertIsNone(getFractalConfig(f, ''))
+        self.assertIsNotNone(getFractalConfig(f, 'peacock'))
+        self.assertIsNone(getFractalConfig(f, 'Still Not In Here'))
+        self.assertIsNotNone(getFractalConfig(f, 'monkey-knife-fight'))
+        self.assertIsNone(getFractalConfig(f, 'shrimp-coctail'))
+        self.assertIsNotNone(getFractalConfig(f, 'shrimp-cocktail'))
 
     def test_gradientLength(self):
         """Color palette contains the expected number of colors"""
-        self.assertEqual(108, len(grad))
+        self.assertEqual(102, len(grad))
 
 
 if __name__ == '__main__':
