@@ -19,59 +19,35 @@
 #                                  this software without specific prior written
 #                                  permission.
 
-
 import sys
-import FractalInformation
-import ImagePainter
-frac_info = FractalInformation.fractalinformation()
-MBROTS = [
-        'elephants',
-        'leaf',
-        'mandelbrot',
-        'mandelbrot-zoomed',
-        'seahorse',
-        'spiral0', 
-        'spiral1', 
-        'starfish'
-        ]
 
-PHOENX = [
-        'phoenix',
-        'peacock',
-        'monkey-knife-fight',
-        'shrimp-cocktail'
-        ]
+import palette
+import mandelbrot
+import phoenix
+from fractal_information import FRACTALS
+from image_painter import paint
+
 
 if len(sys.argv) < 2:
-    print("Please provide the name of a fractal as an argument.")
-    print("Available Fractals:")
-    for fractal in PHOENX + MBROTS:
-        print("\t{}".format(fractal))
+    print ('Please provide the name of a fractal as an argument')
+    for f in FRACTALS:
+        print(f"\t{f}")
     sys.exit(1)
 
-fractal_name = sys.argv[1]
-
-if fractal_name not in PHOENX and fractal_name not in MBROTS:
-    print("ERROR: {} is not a valid fractal.".format(fractal_name))
-    print("Phoenix Fractals:", ", ".join(PHOENX))
-    print("Mandelbrot Fractals:", ", ".join(MBROTS))
-    sys.exit(1)
-
-if sys.argv[1] not in PHOENX and sys.argv[1] not in MBROTS:
+if sys.argv[1] not in FRACTALS:
     print("ERROR:", sys.argv[1], "is not a valid fractal")
     print("Please choose one of the following:")
-    print("Phoenix Fractals:")
-    for fractal in PHOENX:
-        print("\t%s" % fractal)
-    print("Mandelbrot Fractals:")
-    for fractal in MBROTS:
-        print("\t%s" % fractal)
-    print("Those are all of the choices")
+    for f in FRACTALS:
+        print(f"\t{f}")
     sys.exit(1)
 
-if sys.argv[1] in PHOENX:
-    ImagePainter.phoenix_main(sys.argv[1])
-elif sys.argv[1] in MBROTS:
-    ImagePainter.mbrot_main(sys.argv[1])
+name = sys.argv[1]
+fractal = FRACTALS[name]
+if fractal['type'] == 'mandelbrot':
+    palette = palette.MANDELBROT
+    count = mandelbrot.count
 else:
-    print("The fractal given on the command line", sys.argv[1], "was not found in the command line")
+    palette = palette.PHOENIX
+    count = phoenix.count
+
+paint(fractal, name, count, palette)
