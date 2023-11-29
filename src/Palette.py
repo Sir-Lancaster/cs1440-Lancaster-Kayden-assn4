@@ -16,6 +16,7 @@
 #                                  endorse or promote products derived from
 #                                  this software without specific prior written
 #                                  permission.
+from colour import Color
 
 CUSTARD = '#E1D89F'
 PISTACHIO = '#A8D786'
@@ -61,3 +62,41 @@ PHOENIX = ['#ffe4b5', '#ffe5b2', '#ffe7af', '#ffe8ac', '#ffeaa8', '#ffeca5',
            '#008bac', '#0083a9', '#007ba6', '#0074a3', '#006da0', '#00669d',
            '#005f9a', '#005996', '#005293', '#004c90', '#00468d', '#00418a',
            '#003b87', '#003684', '#003080', '#002b7d', '#00277a', '#002277']
+
+class Palette:
+    def __init__(self):
+        # You can define common data members here if needed
+        pass
+
+    def getColor(self, n):
+        raise NotImplementedError("Concrete subclass of Palette must implement getColor() method")
+
+class StripedPalette(Palette):
+    def getColor(self, n):
+        # Create a color palette with repeating stripes
+        colors = ['#FF0000', '#00FF00', '#0000FF']
+        return colors[n % len(colors)]
+
+class GradientPalette(Palette):
+    def __init__(self, start_color, end_color):
+        super().__init__()
+        self.start_color = Color(start_color)
+        self.end_color = Color(end_color)
+
+    def getColor(self, n):
+        # Create a color palette using a gradient between start and end colors
+        interpolation = n / 512.0  # Adjust for the desired number of iterations
+        color = self.start_color.range_to(self.end_color, interpolation)
+        return color.get_hex_l()
+
+class DynamicPalette(Palette):
+    def __init__(self, start_color, end_color):
+        super().__init__()
+        self.start_color = Color(start_color)
+        self.end_color = Color(end_color)
+
+    def getColor(self, n):
+        # Create a dynamically generated color palette using the colour module
+        interpolation = n / 512.0
+        color = self.start_color.range_to(self.end_color, interpolation)
+        return color.get_hex_l()
