@@ -15,5 +15,5 @@
 | Date        | Time Spent | Events
 |-------------|------------|--------------------
 | November 27 | 1.15 hrs   | Finished phase 0. 4.1-analyzed
-| November 29 | 1.15 hrs   | Began designing and implementing my new classes and subclasses. 
+| November 29 | 2.1  hrs   | Began designing and implementing my new classes and subclasses. Finished phase 1. 
 | TOTAL       | 12.5 hours | *Your TOTAL should agree with your daily entries*
