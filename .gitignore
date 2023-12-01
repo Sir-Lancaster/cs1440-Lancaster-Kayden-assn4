@@ -23,3 +23,5 @@ __pycache__
 *.zip
 *.bak
 *.png
+
+colour.py

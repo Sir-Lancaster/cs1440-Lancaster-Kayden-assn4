@@ -16,7 +16,6 @@
 #                                  endorse or promote products derived from
 #                                  this software without specific prior written
 #                                  permission.
-from colour import Color
 
 CUSTARD = '#E1D89F'
 PISTACHIO = '#A8D786'
@@ -63,9 +62,11 @@ PHOENIX = ['#ffe4b5', '#ffe5b2', '#ffe7af', '#ffe8ac', '#ffeaa8', '#ffeca5',
            '#005f9a', '#005996', '#005293', '#004c90', '#00468d', '#00418a',
            '#003b87', '#003684', '#003080', '#002b7d', '#00277a', '#002277']
 
+from colour import Color
+
 class Palette:
     def __init__(self):
-        # You can define common data members here if needed
+        # You can define data members here if needed
         pass
 
     def getColor(self, n):
@@ -73,30 +74,27 @@ class Palette:
 
 class StripedPalette(Palette):
     def getColor(self, n):
-        # Create a color palette with repeating stripes
-        colors = ['#FF0000', '#00FF00', '#0000FF']
+        # Example of a simple palette using modulus for repeating stripes
+        colors = ["#FF0000", "#00FF00", "#0000FF"]
         return colors[n % len(colors)]
 
-class GradientPalette(Palette):
-    def __init__(self, start_color, end_color):
-        super().__init__()
-        self.start_color = Color(start_color)
-        self.end_color = Color(end_color)
-
-    def getColor(self, n):
-        # Create a color palette using a gradient between start and end colors
-        interpolation = n / 512.0  # Adjust for the desired number of iterations
-        color = self.start_color.range_to(self.end_color, interpolation)
-        return color.get_hex_l()
-
 class DynamicPalette(Palette):
-    def __init__(self, start_color, end_color):
-        super().__init__()
-        self.start_color = Color(start_color)
-        self.end_color = Color(end_color)
-
     def getColor(self, n):
-        # Create a dynamically generated color palette using the colour module
-        interpolation = n / 512.0
-        color = self.start_color.range_to(self.end_color, interpolation)
-        return color.get_hex_l()
+        # Example of dynamically generated palette using the colour module
+        start_color = Color("#FF0000")
+        end_color = Color("#0000FF")
+        # Ensure steps is always a positive integer
+        steps = max(int(n / 512.0), 1)
+        # Convert the generator to a list
+        interpolated_colors = list(start_color.range_to(end_color, steps))
+        return interpolated_colors[-1].get_hex_l()
+
+# Example usage
+palette1 = StripedPalette()
+palette2 = DynamicPalette()
+
+for i in range(64, 513):
+    color1 = palette1.getColor(i)
+    color2 = palette2.getColor(i)
+    print(f"Iteration {i}: Striped Palette - {color1}, Dynamic Palette - {color2}")
+
