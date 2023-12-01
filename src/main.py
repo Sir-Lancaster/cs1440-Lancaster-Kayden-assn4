@@ -21,11 +21,11 @@
 
 import sys
 
-import palette
+import Palette
 import mandelbrot
 import phoenix
 from fractal_information import FRACTALS
-from image_painter import paint
+from image_painter import ImagePainter
 
 
 if len(sys.argv) < 2:
@@ -44,10 +44,11 @@ if sys.argv[1] not in FRACTALS:
 name = sys.argv[1]
 fractal = FRACTALS[name]
 if fractal['type'] == 'mandelbrot':
-    palette = palette.MANDELBROT
+    currentPalette = Palette.MANDELBROT
     count = mandelbrot.count
 else:
-    palette = palette.PHOENIX
+    currentPalette = Palette.PHOENIX
     count = phoenix.count
 
-paint(fractal, name, count, palette)
+genFractal = ImagePainter(fractal, name, count, currentPalette)
+genFractal.paint()
