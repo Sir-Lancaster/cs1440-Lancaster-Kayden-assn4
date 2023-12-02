@@ -17,7 +17,7 @@ class Mandelbrot(Fractal):
 class Phoenix(Fractal):
     def count(self, c):
         z = 0
-        max_iterations = 640
+        max_iterations = 513
         for i in range(max_iterations):
             z = z * z + c.conjugate()
             if abs(z) > 2.0:
@@ -28,7 +28,7 @@ class NightmareFractal(Fractal):
     def count(self, c):
         # Your custom fractal formula implementation
         z = 0
-        max_iterations = 2000
+        max_iterations = 900
         for i in range(max_iterations):
             z = z * z + c
             if abs(z) > 2.0:
@@ -50,6 +50,6 @@ if __name__ == '__main__':
     # Example usage with Mandelbrot fractal
     mandelbrot_instance = Mandelbrot()
 
-    iterations = mandelbrot_instance.count
+    iterations = mandelbrot_instance.count(0+0j)
     print(f'Mandelbrot iterations for: {iterations}')
 

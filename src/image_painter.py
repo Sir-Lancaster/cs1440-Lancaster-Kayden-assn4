@@ -22,7 +22,7 @@ import time
 import sys
 
 class ImagePainter:
-    def __init__(self, fractal, name, count, palette):  # Added a colon here
+    def __init__(self, fractal, name, count, palette):
         self.fractal = fractal
         self.name = name
         self.count = count
@@ -48,9 +48,9 @@ class ImagePainter:
         canvas.create_image((IMAGE_SIZE / 2.0, IMAGE_SIZE / 2.0), image=img, state="normal")
         canvas.pack()
 
-        minx = self.fractal['centerX'] - (self.fractal['axisLen'] / 2.0)
-        maxx = self.fractal['centerX'] + (self.fractal['axisLen'] / 2.0)
-        miny = self.fractal['centerY'] - (self.fractal['axisLen'] / 2.0)
+        minx = float(self.fractal['centerx']) - (float(self.fractal['axislength']) / 2.0)
+        maxx = float(self.fractal['centerx']) + (float(self.fractal['axislength']) / 2.0)
+        miny = float(self.fractal['centery']) - (float(self.fractal['axislength']) / 2.0)
 
         # At this scale, how much length and height on the
         # imaginary plane does one pixel take?
@@ -62,7 +62,7 @@ class ImagePainter:
             for col in range(IMAGE_SIZE):
                 x = minx + col * pixelsize
                 y = miny + row * pixelsize
-                cc.append(self.palette[self.count(complex(x, y), max_iter - 1)])
+                cc.append(self.palette[self.count])
             img.put('{' + ' '.join(cc) + '}', to=(0, IMAGE_SIZE - row))
             win.update()  # display a row of pixels
             print(self.statusbar(row, col), end='\r', file=sys.stderr)  # the '\r' returns the cursor to the leftmost column

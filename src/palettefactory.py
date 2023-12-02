@@ -1,12 +1,16 @@
 from Palette import StripedPalette, DynamicPalette
 
 class PaletteFactory:
-    def makePalette(self, palette_name='dynamic', *args, **kwargs):
+    def makePalette(self, iterations, palette_name='dynamic'):
 
         if palette_name == "striped":
-            return StripedPalette()
+            strip_pal = StripedPalette()
+            current_palette = strip_pal.getColor(iterations)
+            return current_palette
         elif palette_name == "dynamic":
-            return DynamicPalette()
+            dyn_pal = DynamicPalette()
+            current_palette = dyn_pal.getColor(iterations)
+            return current_palette
         else:
             raise NotImplementedError("Invalid palette requested")
 
@@ -15,13 +19,8 @@ if __name__ == '__main__':
     factory = PaletteFactory()
 
     # Create instances of different palettes
-    striped_palette = factory.makePalette("striped")
-    dynamic_palette = factory.makePalette("dynamic", "#FF0000", "#00FF00")
+    striped_palette = factory.makePalette(100, "striped")
+    print(len(striped_palette))
+    dynamic_palette = factory.makePalette(100, "dynamic")
+    print(len(dynamic_palette))
 
-    # Get colors from the palettes
-    striped_colors = striped_palette.getColor(5)
-    dynamic_colors = dynamic_palette.getColor(5)
-
-    print(striped_colors)
-    print("\n That was Striped colors. Now for our featured presentation: Dynamic colors")
-    print(dynamic_colors)

@@ -83,8 +83,7 @@ class DynamicPalette(Palette):
         # Example of dynamically generated palette using the colour module
         start_color = Color("black")
         end_color = Color("red")
-        # Ensure steps is always a positive integer
-        steps = abs(n)
+        steps = n
         # Convert the generator to a list
         Dynamic_Colors = []
         for color in list(start_color.range_to(end_color, steps)):
@@ -100,4 +99,4 @@ if __name__ == '__main__':
     color1 = palette1.getColor(513)
     color2 = palette2.getColor(513)
     print(f"Dynamic Palette - {color2}")
-    print(len(color2))
+    print(len(color1))
