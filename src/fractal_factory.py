@@ -1,7 +1,7 @@
 import fractal
 
 class FractalFactory:
-    def makeFractal(self, n, m, Fractal_name='mandelbrot'):
+    def makeFractal(self, Fractal_name='mandelbrot'):
 
         if Fractal_name == "mandelbrot":
             Fractal_options = fractal.Mandelbrot()

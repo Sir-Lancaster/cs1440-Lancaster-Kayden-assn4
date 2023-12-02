@@ -43,21 +43,22 @@ if len(sys.argv) == 2:                                              # if the Use
     frac_name = sys.argv[1].strip('data/').strip('.frac')
     count = frac_factory.makeFractal(Fractal_name=frac_name)
     fractal = frac_parse.parseFracFile(file_path=name)
-    iterations = int(fractal.get('iterations'))
-    currentPalette = Pal_factory.makePalette(iterations)
+    iterations_count = int(fractal.get('iterations'))
+    currentPalette = Pal_factory.makePalette(iterations=iterations_count)
 
 elif len(sys.argv) == 3:                                            # if the user provides both a fractal name and a palette name. 
     name = sys.argv[1]
     frac_name = sys.argv[1].strip('data/').strip('.frac')           # note to self: this line is not needed on the 'else' section.
     count = frac_factory.makeFractal(Fractal_name=frac_name)    
     fractal = frac_parse.parseFracFile(name)
+    iterations_count = int(fractal.get('iterations'))
     pal_Name = sys.argv[2]
-    currentPalette = Pal_factory.makePalette(palette_name=pal_Name)
+    currentPalette = Pal_factory.makePalette(iterations=iterations_count, palette_name=pal_Name)
 else:
     name = 'mandelbrot'
     count = phe.count
     fractal = frac_parse.parseFracFile()
-    currentPalette = Pal_factory.makePalette(513)
+    currentPalette = Pal_factory.makePalette()
 
 paint_image = Image_Painter(fractal, name, count, currentPalette)
 paint_image.paint()

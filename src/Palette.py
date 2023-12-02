@@ -67,6 +67,8 @@ from colour import Color
 class Palette:
     def __init__(self):
         # You can define data members here if needed
+        self.Dynamic_Colors = []
+        self.striped_colors = []
         pass
 
     def getColor(self, n):
@@ -75,8 +77,16 @@ class Palette:
 class StripedPalette(Palette):
     def getColor(self, n):
         # Example of a simple palette using modulus for repeating stripes
-        colors = ["#FF0000", "#00FF00", "#0000FF"]
-        return colors[n % len(colors)]
+        for i in range(n):
+            if i % 2 == 0:
+                current_color = Color('red')
+                curCol_to_hex = current_color.hex_l
+                self.striped_colors.append(curCol_to_hex)
+            else:
+                current_color = Color('blue')
+                curCol_to_hex = current_color.hex_l
+                self.striped_colors.append(curCol_to_hex)
+        return self.striped_colors
 
 class DynamicPalette(Palette):
     def getColor(self, n):
@@ -85,11 +95,9 @@ class DynamicPalette(Palette):
         end_color = Color("black")
         steps = n
         # Convert the generator to a list
-        Dynamic_Colors = []
         for color in list(start_color.range_to(end_color, steps)):
-            Dynamic_Colors.append(color.hex_l)
-        print(Dynamic_Colors)
-        return Dynamic_Colors
+            self.Dynamic_Colors.append(color.hex_l)
+        return self.Dynamic_Colors
     
 if __name__ == '__main__':
     # Example usage
@@ -99,5 +107,5 @@ if __name__ == '__main__':
 
     color1 = palette1.getColor(513)
     color2 = palette2.getColor(513)
-    print(f"Dynamic Palette - {color2}")
+    print(f"Striped Palette - {color1}")
     print(len(color1))

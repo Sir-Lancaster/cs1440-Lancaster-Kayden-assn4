@@ -1,7 +1,7 @@
 from Palette import StripedPalette, DynamicPalette
 
 class PaletteFactory:
-    def makePalette(self, iterations, palette_name='dynamic'):
+    def makePalette(self, iterations=513, palette_name='dynamic'):
 
         if palette_name == "striped":
             strip_pal = StripedPalette()
@@ -19,8 +19,8 @@ if __name__ == '__main__':
     factory = PaletteFactory()
 
     # Create instances of different palettes
-    striped_palette = factory.makePalette(100, "striped")
+    striped_palette = factory.makePalette(palette_name="striped")
     print(len(striped_palette))
-    dynamic_palette = factory.makePalette(100, "dynamic")
+    dynamic_palette = factory.makePalette(palette_name="dynamic")
     print(len(dynamic_palette))
 
