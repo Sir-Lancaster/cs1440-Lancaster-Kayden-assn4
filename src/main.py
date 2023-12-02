@@ -21,7 +21,7 @@
 
 import sys
 
-from image_painter import paint
+from image_painter import Image_Painter
 import fractal_factory
 import palettefactory
 import fractal_parser
@@ -59,4 +59,5 @@ else:
     fractal = frac_parse.parseFracFile()
     currentPalette = Pal_factory.makePalette(513)
 
-paint(fractal, name, count, currentPalette)
+paint_image = Image_Painter(fractal, name, count, currentPalette)
+paint_image.paint()
