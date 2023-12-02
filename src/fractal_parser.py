@@ -1,5 +1,5 @@
 class FractalParser:
-    def parseFracFile(self, file_path='data/phoenix.frac'):
+    def parseFracFile(self, file_path='data/mandelbrot.frac'):
         # Dictionary to store the parsed parameters
         fractal_dict = {}
 

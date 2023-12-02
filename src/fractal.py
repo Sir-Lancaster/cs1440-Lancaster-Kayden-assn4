@@ -44,16 +44,17 @@ class Phoenix(Fractal):
             zPrev = zSave  # Set the prevZ value for the next iteration
         return end
 
-class NightmareFractal(Fractal):
-    def count(self, c):
-        # Your custom fractal formula implementation
-        z = 0
-        max_iterations = 900
-        for i in range(max_iterations):
-            z = z * z + c
+class JuliaSet(Fractal):
+    def __init__(self, constant):
+        self.constant = constant
+
+    def count(self, z, end):
+        for i in range(end):
+            z = z * z + self.constant
             if abs(z) > 2.0:
                 return i
-        return max_iterations
+        return end
+
 
 class TheBigCheese(Fractal):
     def count(self, c):

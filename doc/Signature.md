@@ -18,5 +18,5 @@
 | November 29 | 2.1  hrs   | Began designing and implementing my new classes and subclasses. Finished phase 1. 
 | November 30 | 1.2  hrs   | Implemented palette and fixed some problems with it. 
 | December 01 | 6    hrs   | Finished phase 2 WOO! made progress on phase 3.
-| December 02 | .5   hrs   | 
+| December 02 | 1    hrs   | 
 | TOTAL       | 12.5 hours | *Your TOTAL should agree with your daily entries*

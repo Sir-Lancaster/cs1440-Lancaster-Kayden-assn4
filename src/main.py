@@ -35,28 +35,28 @@ frac_factory = fractal_factory.FractalFactory()
 frac_parse = fractal_parser.FractalParser()
 Pal_factory = palettefactory.PaletteFactory()
 mandel = Mandelbrot()
-phe = Phoenix()
+phoe = Phoenix()
 
 # body:
 if len(sys.argv) == 2:                                              # if the User provides a fractal name but not a palette name.
     name = sys.argv[1]
-    frac_name = sys.argv[1].strip('data/').strip('.frac')
-    count = frac_factory.makeFractal(Fractal_name=frac_name)
     fractal = frac_parse.parseFracFile(file_path=name)
+    frac_name = str(fractal.get('type'))
+    count = frac_factory.makeFractal(Fractal_name=frac_name)
     iterations_count = int(fractal.get('iterations'))
     currentPalette = Pal_factory.makePalette(iterations=iterations_count)
 
 elif len(sys.argv) == 3:                                            # if the user provides both a fractal name and a palette name. 
     name = sys.argv[1]
-    frac_name = sys.argv[1].strip('data/').strip('.frac')           # note to self: this line is not needed on the 'else' section.
-    count = frac_factory.makeFractal(Fractal_name=frac_name)    
     fractal = frac_parse.parseFracFile(name)
+    frac_name = str(fractal.get('type'))
+    count = frac_factory.makeFractal(Fractal_name=frac_name)    
     iterations_count = int(fractal.get('iterations'))
     pal_Name = sys.argv[2]
     currentPalette = Pal_factory.makePalette(iterations=iterations_count, palette_name=pal_Name)
 else:
     name = 'mandelbrot'
-    count = phe.count
+    count = mandel.count
     fractal = frac_parse.parseFracFile()
     currentPalette = Pal_factory.makePalette()
 
