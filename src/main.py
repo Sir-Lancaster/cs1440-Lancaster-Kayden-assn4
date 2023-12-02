@@ -26,29 +26,25 @@ import mandelbrot
 import phoenix
 from fractal_information import FRACTALS
 from image_painter import ImagePainter
+import fractal_factory
+import palettefactory
+import fractal_parser
+# fractal factory will call the correct subclass in Fractal that will give you count
+# fractal parser will give you the dictionary contaning the fractal. 
+# palette factory will call the correct palette defined in Palette classes. 
 
-
-if len(sys.argv) < 2:
-    print ('Please provide the name of a fractal as an argument')
-    for f in FRACTALS:
-        print(f"\t{f}")
-    sys.exit(1)
-
-if sys.argv[1] not in FRACTALS:
-    print("ERROR:", sys.argv[1], "is not a valid fractal")
-    print("Please choose one of the following:")
-    for f in FRACTALS:
-        print(f"\t{f}")
-    sys.exit(1)
-
-name = sys.argv[1]
-fractal = FRACTALS[name]
-if fractal['type'] == 'mandelbrot':
-    currentPalette = Palette.MANDELBROT
-    count = mandelbrot.count
+# create some class instances here:
+frac_factory = fractal_factory.FractalFactory()
+frac_parse = fractal_parser.FractalParser()
+Pal_factory = palettefactory.PaletteFactory()
+if len(sys.argv) == 2:
+    name = sys.argv[1]
+    frac_name = sys.argv[1].strip('data/').strip('.frac')
+    count = frac_factory.makeFractal(Fractal_name=frac_name)
+    fractal = frac_parse.parseFracFile(name)
 else:
-    currentPalette = Palette.PHOENIX
-    count = phoenix.count
+    frac_factory.makeFractal()
+
 
 genFractal = ImagePainter(fractal, name, count, currentPalette)
 genFractal.paint()

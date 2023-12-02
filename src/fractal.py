@@ -31,7 +31,7 @@ class NightmareFractal(Fractal):
         max_iterations = 2000
         for i in range(max_iterations):
             z = z * z + c
-            if abs(z) > 3.0:
+            if abs(z) > 2.0:
                 return i
         return max_iterations
 
@@ -42,25 +42,14 @@ class TheBigCheese(Fractal):
         max_iterations = 1500
         for i in range(max_iterations):
             z = z * z + c
-            if abs(z) > 2.5:
+            if abs(z) > 2.0:
                 return i
         return max_iterations
 
-# Example usage with Mandelbrot fractal
-mandelbrot_instance = Mandelbrot()
-complex_number = 1 + 2j
-iterations = mandelbrot_instance.count(complex_number)
-print(f'Mandelbrot iterations for {complex_number}: {iterations}')
+if __name__ == '__main__':    
+    # Example usage with Mandelbrot fractal
+    mandelbrot_instance = Mandelbrot()
 
-# Similar usage with other fractal classes
-phoenix_instance = Phoenix()
-nightmare_instance = NightmareFractal()
-the_big_cheese_instance = TheBigCheese()
+    iterations = mandelbrot_instance.count
+    print(f'Mandelbrot iterations for: {iterations}')
 
-iterations_phoenix = phoenix_instance.count(complex_number)
-iterations_nightmare = nightmare_instance.count(complex_number)
-iterations_big_cheese = the_big_cheese_instance.count(complex_number)
-
-print(f'Phoenix iterations: {iterations_phoenix}')
-print(f'NightmareFractal iterations: {iterations_nightmare}')
-print(f'TheBigCheese iterations: {iterations_big_cheese}')

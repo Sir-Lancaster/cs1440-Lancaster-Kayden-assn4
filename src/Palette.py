@@ -84,19 +84,20 @@ class DynamicPalette(Palette):
         start_color = Color("black")
         end_color = Color("red")
         # Ensure steps is always a positive integer
-        steps = n
+        steps = abs(n)
         # Convert the generator to a list
         Dynamic_Colors = []
         for color in list(start_color.range_to(end_color, steps)):
             Dynamic_Colors.append(color.hex_l)
         return Dynamic_Colors
+    
+if __name__ == '__main__':
+    # Example usage
+    palette1 = StripedPalette()
+    palette2 = DynamicPalette()
 
-# Example usage
-palette1 = StripedPalette()
-palette2 = DynamicPalette()
 
-
-color1 = palette1.getColor(513)
-color2 = palette2.getColor(513)
-print(f"Dynamic Palette - {color2}")
-print(len(color2))
+    color1 = palette1.getColor(513)
+    color2 = palette2.getColor(513)
+    print(f"Dynamic Palette - {color2}")
+    print(len(color2))
