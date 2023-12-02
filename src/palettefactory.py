@@ -1,14 +1,14 @@
-from Palette import StripedPalette, DynamicPalette
+from Palette import BurningGold, MorningsTwilight
 
 class PaletteFactory:
     def makePalette(self, iterations=513, palette_name='dynamic'):
 
-        if palette_name == "striped":
-            strip_pal = StripedPalette()
+        if palette_name == "burning":
+            strip_pal = BurningGold()
             current_palette = strip_pal.getColor(iterations)
             return current_palette
-        elif palette_name == "dynamic":
-            dyn_pal = DynamicPalette()
+        elif palette_name == "twilight":
+            dyn_pal = MorningsTwilight()
             current_palette = dyn_pal.getColor(iterations)
             return current_palette
         else:

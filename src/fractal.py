@@ -46,26 +46,28 @@ class Phoenix(Fractal):
 
 class JuliaSet(Fractal):
     def __init__(self, constant):
-        self.constant = constant
+        self.jconstant = constant
 
     def count(self, z, end):
         for i in range(end):
-            z = z * z + self.constant
+            z = z * z + self.jconstant
             if abs(z) > 2.0:
                 return i
         return end
 
 
-class TheBigCheese(Fractal):
-    def count(self, c):
-        # Another custom fractal formula implementation
-        z = 0
-        max_iterations = 1500
-        for i in range(max_iterations):
-            z = z * z + c
-            if abs(z) > 2.0:
-                return i
-        return max_iterations
+class Spider(Fractal):
+   def count(self, c, end):
+    z = complex(0, 0)  # z0
+    for i in range(end):
+        z = z * z + c  # Get z1, z2, ...
+
+        # Update c' = c/2 + z
+        c = c / 2 + z
+
+        if abs(z) > 2.0:
+            return i
+    return end
 
 if __name__ == '__main__':    
     # Example usage with Mandelbrot fractal

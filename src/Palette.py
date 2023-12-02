@@ -74,21 +74,21 @@ class Palette:
     def getColor(self, n):
         raise NotImplementedError("Concrete subclass of Palette must implement getColor() method")
 
-class StripedPalette(Palette):
+class BurningGold(Palette):
     def getColor(self, n):
         # Example of a simple palette using modulus for repeating stripes
         for i in range(n):
             if i % 2 == 0:
-                current_color = Color('red')
+                current_color = Color('crimson')
                 curCol_to_hex = current_color.hex_l
                 self.striped_colors.append(curCol_to_hex)
             else:
-                current_color = Color('blue')
+                current_color = Color('gold')
                 curCol_to_hex = current_color.hex_l
                 self.striped_colors.append(curCol_to_hex)
         return self.striped_colors
 
-class DynamicPalette(Palette):
+class MorningsTwilight(Palette):
     def getColor(self, n):
         # Example of dynamically generated palette using the colour module
         start_color = Color("cyan")
@@ -101,8 +101,8 @@ class DynamicPalette(Palette):
     
 if __name__ == '__main__':
     # Example usage
-    palette1 = StripedPalette()
-    palette2 = DynamicPalette()
+    palette1 = BurningGold()
+    palette2 = MorningsTwilight()
 
 
     color1 = palette1.getColor(513)

@@ -75,9 +75,8 @@ class Image_Painter():
 
         after = time.time()
         print(f"\nDone in {after - before:.3f} seconds!", file=sys.stderr)
-        self.name.strip('data/').strip('.frac')
-        img.write(f"{self.name}.png")
-        print(f"Wrote picture {self.name}.png", file=sys.stderr)
+        img.write(f"{self.name.strip('data/').strip('.frac')}.png")
+        print(f"Wrote picture {self.name.strip('data/').strip('.frac')}.png", file=sys.stderr)
 
         print("Close the image window to exit the program", file=sys.stderr)
 
