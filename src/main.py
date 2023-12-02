@@ -21,10 +21,11 @@
 
 import sys
 
-from image_painter import ImagePainter
+from image_painter import paint
 import fractal_factory
 import palettefactory
 import fractal_parser
+from fractal import Mandelbrot, Phoenix
 # fractal factory will call the correct subclass in Fractal that will give you count
 # fractal parser will give you the dictionary contaning the fractal. 
 # palette factory will call the correct palette defined in Palette classes. 
@@ -33,6 +34,8 @@ import fractal_parser
 frac_factory = fractal_factory.FractalFactory()
 frac_parse = fractal_parser.FractalParser()
 Pal_factory = palettefactory.PaletteFactory()
+mandel = Mandelbrot()
+phe = Phoenix()
 
 # body:
 if len(sys.argv) == 2:                                              # if the User provides a fractal name but not a palette name.
@@ -52,11 +55,8 @@ elif len(sys.argv) == 3:                                            # if the use
     currentPalette = Pal_factory.makePalette(palette_name=pal_Name)
 else:
     name = 'mandelbrot'
-    count = frac_factory.makeFractal(0+0j) - 1
-    print(count)
+    count = phe.count
     fractal = frac_parse.parseFracFile()
     currentPalette = Pal_factory.makePalette(513)
-    print(len(currentPalette))
 
-genFractal = ImagePainter(fractal, name, count, currentPalette)
-genFractal.paint()
+paint(fractal, name, count, currentPalette)

@@ -28,3 +28,6 @@ def count(c, end):
         if abs(z) > 2.0:
             return i
     return end
+if __name__ == '__main__':
+    the_count = count(complex(0, 0), 512)
+    print(the_count)
