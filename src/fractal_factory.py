@@ -11,7 +11,7 @@ class FractalFactory:
             Fractal_options = fractal.Phoenix()
             return Fractal_options.count     
         
-        elif Fractal_name == "julia" or Fractal_name == 'burningshipjulia':
+        elif Fractal_name == "julia":
             Fractal_options = fractal.JuliaSet(complex(-0.7, 0.27015))
             return Fractal_options.count     
         

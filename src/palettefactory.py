@@ -1,7 +1,7 @@
 from Palette import BurningGold, MorningsTwilight
 
 class PaletteFactory:
-    def makePalette(self, iterations=513, palette_name='dynamic'):
+    def makePalette(self, iterations=513, palette_name='twilight'):
 
         if palette_name == "burning":
             strip_pal = BurningGold()
